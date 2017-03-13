@@ -1,1 +1,0 @@
-Delete this txt file before working on your project. This use as a placeholder to push the folders to github.
