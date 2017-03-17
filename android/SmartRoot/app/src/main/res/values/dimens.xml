@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Logo dimensions -->
+    <dimen name="logo_height">300dp</dimen>
+    <dimen name="logo_width">300dp</dimen>
+
+    <!-- Material Design Specs -->
+
+    <!-- Flat button -->
+    <dimen name="flat_button_min_width">88dp</dimen>
+    <dimen name="flat_button_height">36dp</dimen>
+    <dimen name="flat_button_radius">2dp</dimen>
+</resources>

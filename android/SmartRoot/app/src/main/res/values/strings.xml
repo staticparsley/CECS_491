@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SmartRoot</string>
+
+    <!-- Welcome Screen -->
+    <string name="activity_label_welcome">Welcome</string>
+    <string name="button_login">LOGIN</string>
+    <string name="button_register">REGISTER</string>
 </resources>
