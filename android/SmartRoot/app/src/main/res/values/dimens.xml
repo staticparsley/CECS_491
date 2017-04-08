@@ -8,6 +8,7 @@
     <dimen name="logo_width">300dp</dimen>
 
     <!-- Material Design Specs -->
+    <dimen name="dialog_content_padding">24dp</dimen>
 
     <!-- Flat button -->
     <dimen name="flat_button_min_width">88dp</dimen>
