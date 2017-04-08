@@ -13,6 +13,14 @@
     <string name="email">Email</string>
     <string name="confirm_password">Confirm Password</string>
 
+    <!-- Errors for Login and Register Dialog -->
+    <string name="username_empty">Please enter a username.</string>
+    <string name="email_empty">Please enter an email.</string>
+    <string name="password_empty">Please enter a password.</string>
+    <string name="confirm_password_empty">Please re-enter password.</string>
+
+    <string name="password_mismatch">Passwords do not match.</string>
+
     <!-- Buttons for Login and Register Dialog -->
     <string name="login">Login</string>
     <string name="create">Create</string>

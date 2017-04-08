@@ -1,26 +1,28 @@
 package edu.csulb.smartroot;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Welcome extends AppCompatActivity {
 
+    private Context context;
     private LayoutInflater inflater;
-
-    private View viewLogin;
-    private View viewRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Get a reference to this layout inflater
+        // Get reference to this context and inflater to use in dialog listeners
+        context = this;
         inflater = getLayoutInflater();
     }
 
@@ -34,17 +36,21 @@ public class Welcome extends AppCompatActivity {
      */
     public void login(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        DialogLogin dialogLogin = new DialogLogin();
-        viewLogin = inflater.inflate(R.layout.dialog_login, null);
+        View dialogView = inflater.inflate(R.layout.dialog_login, null);
 
         // Set the characteristics of the dialog
-        builder.setView(viewLogin);
-        builder.setPositiveButton(R.string.login, dialogLogin);
-        builder.setNegativeButton(R.string.cancel, dialogLogin);
+        builder.setView(dialogView);
+        builder.setPositiveButton(R.string.login, null);
+        builder.setNegativeButton(R.string.cancel, null);
 
         // Create and show the dialog
-        builder.create();
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Override login button listeners on dialog. This is so the dialog will remain
+        // open when credentials are not valid.
+        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        button.setOnClickListener(new LoginButton(dialog));
     }
 
     /**
@@ -53,79 +59,89 @@ public class Welcome extends AppCompatActivity {
      */
     public void register(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        DialogRegister dialogRegister = new DialogRegister();
-        viewRegister = inflater.inflate(R.layout.dialog_register, null);
+        View dialogView = inflater.inflate(R.layout.dialog_register, null);
 
         // Set the characteristics of the dialog
-        builder.setView(viewRegister);
-        builder.setPositiveButton(R.string.create, dialogRegister);
-        builder.setNegativeButton(R.string.cancel, dialogRegister);
+        builder.setView(dialogView);
+        builder.setPositiveButton(R.string.create, null);
+        builder.setNegativeButton(R.string.cancel, null);
 
         // Create and show the dialog
-        builder.create();
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Override login button listeners on dialog. This is so the dialog will remain
+        // open when credentials are not valid.
+        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        button.setOnClickListener(new RegisterButton(dialog));
     }
 
     //////////////////////
-    // DIALOG LISTENERS //
+    // BUTTON LISTENERS //
     //////////////////////
 
     /**
-     * A dialog listener for Login. This will attempt to login the user into the database.
+     * A button listener for Login. This will attempt to login the user into the database.
      */
-    private class DialogLogin implements DialogInterface.OnClickListener{
+    private class LoginButton implements Button.OnClickListener {
+        private AlertDialog dialog;
+
         /**
-         * An implementation of DialogInterface. This will handle logging in the user with
-         * the credentials provided.
-         * @param dialogInterface The login dialog interface.
-         * @param id The reference to the button that has been clicked/tapped.
+         * Constructor that will pass the reference to the Login Dialog.
+         * @param dialog References the Login Dialog.
+         */
+        public LoginButton(AlertDialog dialog){
+            this.dialog = dialog;
+        }
+
+        /**
+         * An implementation of Button.OnClickListener. This will validate the user input and
+         * attempt to login the user into the database.
+         * @param view References the Login button.
          */
         @Override
-        public void onClick(DialogInterface dialogInterface, int id){
-            // When the user selects login...
-            if (id == DialogInterface.BUTTON_POSITIVE){
-                //... attempt to login the user
+        public void onClick(View view){
+            // Get the references to EditText from dialog_login.xml layout.
+            EditText eUserName = (EditText) dialog.findViewById(R.id.username);
+            EditText ePassword = (EditText) dialog.findViewById(R.id.password);
 
-                // Get the references to EditText from dialog_login.xml layout.
-                EditText eUserName = (EditText) viewLogin.findViewById(R.id.username);
-                EditText ePassword = (EditText) viewLogin.findViewById(R.id.password);
+            // Get the credentials from the EditText
+            String userName = eUserName.getText().toString();
+            String password = ePassword.getText().toString();
 
-                // Get the credentials from the EditText
-                String userName = eUserName.getText().toString();
-                String password = ePassword.getText().toString();
-
-                // Attempt to log user into the system
-                System.out.println("Trying to login...");
-                System.out.println(userName);
-                System.out.println(password);
-                dialogInterface.dismiss();
+            // Validate user input for username and password
+            if (userName.equals("")) {
+                Toast.makeText(context, R.string.username_empty, Toast.LENGTH_SHORT).show();
+                eUserName.requestFocus();
+                return;
             }
-            /// When the user selects cancel...
-            else if (id == DialogInterface.BUTTON_NEGATIVE) {
-                //... cancel the attempt to login the user
-                System.out.println("Cancelling login...");
-                dialogInterface.cancel();
+            if (password.equals("")) {
+                Toast.makeText(context, R.string.password_empty, Toast.LENGTH_SHORT).show();
+                ePassword.requestFocus();
+                return;
             }
+
+            System.out.println("Trying to login...");
+            System.out.println(userName);
+            System.out.println(password);
+            dialog.dismiss();
         }
     }
 
-    /**
-     * A dialog listener for Register. This will attempt to register a new user into the database.
-     */
-    private class DialogRegister implements DialogInterface.OnClickListener{
-        /**
-         * An implementation of DialogInterface. This will handle registering the user with the
-         * credentials provided.
-         * @param dialogInterface The register dialog interface.
-         * @param id The reference to the button that has been clicked/tapped.
-         */
+    private class RegisterButton implements Button.OnClickListener{
+        private AlertDialog dialog;
+
+        public RegisterButton(AlertDialog dialog){
+            this.dialog = dialog;
+        }
+
         @Override
-        public void onClick(DialogInterface dialogInterface, int id){
+        public void onClick(View view){
             // Get the references to EditText from dialog_register.xml layout.
-            EditText eUserName = (EditText) viewRegister.findViewById(R.id.username);
-            EditText eEmail = (EditText) viewRegister.findViewById(R.id.email);
-            EditText ePassword = (EditText) viewRegister.findViewById(R.id.password);
-            EditText eConfirmPassword = (EditText) viewRegister.findViewById(R.id.confirm_password);
+            EditText eUserName = (EditText) dialog.findViewById(R.id.username);
+            EditText eEmail = (EditText) dialog.findViewById(R.id.email);
+            EditText ePassword = (EditText) dialog.findViewById(R.id.password);
+            EditText eConfirmPassword = (EditText) dialog.findViewById(R.id.confirm_password);
 
             // Get the credentials from the EditText
             String userName = eUserName.getText().toString();
@@ -133,16 +149,40 @@ public class Welcome extends AppCompatActivity {
             String password = ePassword.getText().toString();
             String confirmPassword = eConfirmPassword.getText().toString();
 
-            if (id == DialogInterface.BUTTON_POSITIVE){
-                System.out.println("Trying to register...");
-                System.out.println(userName + "\n" +
-                                    email + "\n" +
-                                    password + "\n" +
-                                    confirmPassword + "\n");
+            // Validate user input for username, email, password, and confirm password
+            if (userName.equals("")) {
+                Toast.makeText(context, R.string.username_empty, Toast.LENGTH_SHORT).show();
+                eUserName.requestFocus();
+                return;
             }
-            else if (id == DialogInterface.BUTTON_NEGATIVE){
-                System.out.println("Cancelling register...");
+            if (email.equals("")) {
+                Toast.makeText(context, R.string.email_empty, Toast.LENGTH_SHORT).show();
+                eEmail.requestFocus();
+                return;
             }
+            if (password.equals("")) {
+                Toast.makeText(context, R.string.password_empty, Toast.LENGTH_SHORT).show();
+                ePassword.requestFocus();
+                return;
+            }
+            if (confirmPassword.equals("")) {
+                Toast.makeText(context, R.string.confirm_password_empty, Toast.LENGTH_SHORT).show();
+                eConfirmPassword.requestFocus();
+                return;
+            }
+            if (!password.equals(confirmPassword)){
+                Toast.makeText(context, R.string.password_mismatch, Toast.LENGTH_SHORT).show();
+                eConfirmPassword.requestFocus();
+                return;
+            }
+
+            System.out.println("Trying to register...");
+            System.out.println(userName + "\n" +
+                    email + "\n" +
+                    password + "\n" +
+                    confirmPassword + "\n");
+
+            dialog.dismiss();
         }
     }
 }
