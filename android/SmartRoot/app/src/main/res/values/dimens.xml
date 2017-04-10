@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ************ -->
+    <!-- * ACTIVITY * -->
+    <!-- ************ -->
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
@@ -7,11 +11,34 @@
     <dimen name="logo_height">300dp</dimen>
     <dimen name="logo_width">300dp</dimen>
 
-    <!-- Material Design Specs -->
-    <dimen name="dialog_content_padding">24dp</dimen>
+    <!-- ************* -->
+    <!-- * CARD VIEW * -->
+    <!-- ************* -->
 
-    <!-- Flat button -->
+    <!-- CardView specifications -->
+    <dimen name="dialog_content_padding">14dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_margin_horizontal">16dp</dimen>
+    <dimen name="card_margin_vertical">8dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
+    <!-- Font sizes -->
+    <dimen name="fontsize_garden">24sp</dimen>
+    <dimen name="fontsize_readings">16sp</dimen>
+    <dimen name="fontsize_updated">10sp</dimen>
+
+    <!-- Label padding -->
+    <dimen name="padding_label">8dp</dimen>
+    <dimen name="padding_dense_label">4dp</dimen>
+
+    <!-- *************** -->
+    <!-- * FLAT BUTTON * -->
+    <!-- *************** -->
+
     <dimen name="flat_button_min_width">88dp</dimen>
     <dimen name="flat_button_height">36dp</dimen>
     <dimen name="flat_button_radius">2dp</dimen>
+
+    <dimen name="flat_button_dense_min_width">60dp</dimen>
+    <dimen name="flat_button_dense_height">18dp</dimen>
 </resources>

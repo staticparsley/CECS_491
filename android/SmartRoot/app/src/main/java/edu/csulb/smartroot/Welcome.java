@@ -11,17 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * The starting activity. This will prompt the user to either login or register a new account.
+ */
 public class Welcome extends AppCompatActivity {
 
     private Context context;
     private LayoutInflater inflater;
 
+    /**
+     * Gets references to context and inflater for button listeners upon creation of this activity.
+     * @param savedInstanceState The state of this activity when previously launched.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Get reference to this context and inflater to use in dialog listeners
+        // Get reference to this context and inflater to use in button listeners
         context = this;
         inflater = getLayoutInflater();
     }
@@ -121,6 +128,8 @@ public class Welcome extends AppCompatActivity {
                 return;
             }
 
+            // TODO: Implement logging in user to the database.
+            // Create new intent to start GardenView activity upon validation.
             System.out.println("Trying to login...");
             System.out.println(userName);
             System.out.println(password);
@@ -128,13 +137,25 @@ public class Welcome extends AppCompatActivity {
         }
     }
 
+    /**
+     * A button listener for Register. This will attempt to register a new user on the database.
+     */
     private class RegisterButton implements Button.OnClickListener{
         private AlertDialog dialog;
 
+        /**
+         * Constructor that will get a reference to the AlertDialog to build the login dialog.
+         * @param dialog The reference to AlertDialog.
+         */
         public RegisterButton(AlertDialog dialog){
             this.dialog = dialog;
         }
 
+        /**
+         * An implementation of Button.OnClickListener. This will validate the user input and
+         * attempt to register a new user into the database.
+         * @param view References the Register button.
+         */
         @Override
         public void onClick(View view){
             // Get the references to EditText from dialog_register.xml layout.
@@ -176,6 +197,7 @@ public class Welcome extends AppCompatActivity {
                 return;
             }
 
+            // TODO: Implement registering new user to database.
             System.out.println("Trying to register...");
             System.out.println(userName + "\n" +
                     email + "\n" +

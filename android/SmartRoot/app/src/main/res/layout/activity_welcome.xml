@@ -9,12 +9,14 @@
     android:orientation="vertical"
     tools:context="edu.csulb.smartroot.Welcome">
 
+    <!-- Logo for Senior Project -->
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/logo_height"
         android:src="@drawable/smart_root_logo"/>
 
+    <!-- Login button -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,10 +24,11 @@
         android:textColor="@color/color_text_button"
         android:minWidth="@dimen/flat_button_min_width"
         android:height="@dimen/flat_button_height"
-        android:gravity="left|center_vertical"
+        android:gravity="start|center_vertical"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:onClick="login"/>
 
+    <!-- Register button -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +36,7 @@
         android:textColor="@color/color_text_button"
         android:minWidth="@dimen/flat_button_min_width"
         android:height="@dimen/flat_button_height"
-        android:gravity="left|center_vertical"
+        android:gravity="start|center_vertical"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:onClick="register"/>
 
