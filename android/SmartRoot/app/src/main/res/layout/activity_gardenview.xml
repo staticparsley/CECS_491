@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.csulb.smartroot.GardenView">
+    tools:context="edu.csulb.smartroot.gardenview.GardenView">
 
     <!-- RecyclerView to display list of garden cards -->
     <android.support.v7.widget.RecyclerView

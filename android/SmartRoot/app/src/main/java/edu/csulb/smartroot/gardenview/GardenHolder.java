@@ -1,4 +1,4 @@
-package edu.csulb.smartroot;
+package edu.csulb.smartroot.gardenview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import edu.csulb.smartroot.R;
+import edu.csulb.smartroot.gardenview.listeners.*;
 
 /**
  * An adapter that will generate a card for each garden. These cards will be displayed in a list
@@ -37,7 +40,7 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
 
     /**
      * An implementation of RecyclerView.Adapter. It will create the card view for each individual
-     * garden from card_garden.xml.
+     * garden using card_garden.xml layout.
      * @param parent The ViewGroup which the card view will be added to. In this case,
      *               from GardenView.java.
      * @param viewType The view type of the generated card.
@@ -143,74 +146,6 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
             System.out.println("Shut down");
         }
         return true;
-    }
-
-    //////////////////////
-    // BUTTON LISTENERS //
-    //////////////////////
-
-    /**
-     * A button listener for Update. This will update the sensor readings of the garden.
-     */
-    private class UpdateButton implements Button.OnClickListener {
-        /**
-         * An implementation of Button.OnClickListener. This will retrieve the current
-         * sensor readings from the garden.
-         * @param view References the Update button.
-         */
-        @Override
-        public void onClick(View view){
-            // TODO: Implement retrieval of sensor readings from garden.
-            System.out.println("Update button pressed.");
-        }
-    }
-
-    /**
-     * A button listener for View History. This will display the sensor reading history of the garden.
-     */
-    private class HistoryButton implements Button.OnClickListener {
-        /**
-         * An implementation of Button.OnClickListener. This will retrieve the sensor reading history
-         * of the garden and display the results in a dialog.
-         * @param view References the View History button.
-         */
-        @Override
-        public void onClick(View view){
-            // TODO: Implement retrieval of sensor reading history of garden and display in dialog.
-            System.out.println("View History button pressed.");
-        }
-    }
-
-    /**
-     * A button listener for Water Now. This will water the garden.
-     */
-    private class WaterButton implements Button.OnClickListener {
-        /**
-         * An implementation of Button.OnClickListener. This will send a message to the garden
-         * to begin watering.
-         * @param view References the Water Now button.
-         */
-        @Override
-        public void onClick(View view){
-            // TODO: Implement sending message to garden to start watering.
-            System.out.println("Water Now button pressed.");
-        }
-    }
-
-    /**
-     * A button listener for Setup. This will display the automatic watering settings.
-     */
-    private class SetupButton implements Button.OnClickListener {
-        /**
-         * An implementation of Button.OnClickListener. This will display the automatic watering
-         * settings in a dialog.
-         * @param view References the Setup button.
-         */
-        @Override
-        public void onClick(View view){
-            // TODO: Implement dialog with automatic watering settings.
-            System.out.println("Setup button pressed.");
-        }
     }
 
     ///////////////////
