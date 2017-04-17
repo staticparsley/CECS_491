@@ -1,6 +1,8 @@
 package edu.csulb.smartroot.gardenview;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -8,6 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,14 +29,19 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
     implements Toolbar.OnMenuItemClickListener{
 
     private ArrayList<Garden> gardens;
+    private ViewGroup viewGroup;
+    private AlertDialog dialog;
 
     /**
      * Constructor that will get a reference to an ArrayList of gardens to create each individual
      * card.
      * @param gardens An ArrayList of gardens.
      */
-    public GardenHolder(ArrayList<Garden> gardens){
+    public GardenHolder(ArrayList<Garden> gardens) {
+
         this.gardens = gardens;
+        this.viewGroup = null;
+        this.dialog = null;
 
         // Adding empty gardens for testing purposes
         gardens.add(new Garden());
@@ -41,14 +52,15 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
     /**
      * An implementation of RecyclerView.Adapter. It will create the card view for each individual
      * garden using card_garden.xml layout.
-     * @param parent The ViewGroup which the card view will be added to. In this case,
-     *               from GardenView.java.
+     * @param parent The ViewGroup which the card view will be added to. In this case, it will be
+     *               added to the activity in GardenView.java.
      * @param viewType The view type of the generated card.
      * @return A ViewHolder containing the garden card view.
      */
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext())
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        viewGroup = parent;
+        View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_garden, parent, false);
 
          return new ViewHolder(v);
@@ -61,7 +73,7 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
      * @param position The position of the ViewHolder in the adapter.
      */
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Context context = holder.view.getContext();
 
         //***Set up overflow menu***//
@@ -138,7 +150,23 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
     public boolean onMenuItemClick(MenuItem menuItem) {
 
         if (menuItem.getItemId() == R.id.menu_push) {
-            // TODO: Implement dialog for push notification settings.
+            AlertDialog.Builder builder = new AlertDialog.Builder(viewGroup.getContext());
+
+            final View dialogView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.dialog_push_notification, viewGroup, false);
+
+            builder.setView(dialogView);
+            builder.setPositiveButton(R.string.button_done, null);
+
+            dialog = builder.create();
+            dialog.show();
+
+            Switch pushNotification = (Switch) dialogView.findViewById(R.id.switch_push_notification);
+            pushNotification.setOnCheckedChangeListener(new PushSwitch());
+
+            Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            button.setOnClickListener(new DoneButton());
+
             System.out.println("Push Notification");
         }
         if(menuItem.getItemId() == R.id.menu_shutdown) {
@@ -146,6 +174,100 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
             System.out.println("Shut down");
         }
         return true;
+    }
+
+    /**
+     * A button listener for Done in the Push Notification Settings dialog. This will configure
+     * the push notification settings according to the user's preference.
+     */
+    private class DoneButton implements Button.OnClickListener {
+
+        /**
+         * An implementation of Button.OnClickListener. This will get the push notification settings
+         * specified by the user in the the Push Notification Settings Dialog.
+         * @param view References the Done button in the Push Notification Settings Dialog.
+         */
+        @Override
+        public void onClick(View view) {
+            // TODO: Process the push notification settings
+            dialog.dismiss();
+        }
+    }
+
+    /**
+     * A switch listener for Push Notification in the Push Notification Settings dialog. This will
+     * enabled and disable the Push Notification Settings.
+     */
+    private class PushSwitch implements CompoundButton.OnCheckedChangeListener {
+        /**
+         * An implementation of CompoundButton.OnCheckedChangeListener. This will update the state
+         * of all the Push Notification Settings.
+         * @param buttonView References to the Push Notification Switch.
+         * @param isChecked The current state of the switch when pressed.
+         */
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            System.out.println("Switch has changed");
+
+            if (isChecked) {
+                // Set the state for temperature warning
+                setState(false,
+                        (Switch) dialog.findViewById(R.id.switch_temperature_warning),
+                        (EditText) dialog.findViewById(R.id.temperature_min),
+                        (EditText) dialog.findViewById(R.id.temperature_max));
+
+                // Set the state for moisture warning
+                setState(
+                        false,
+                        (Switch) dialog.findViewById(R.id.switch_moisture_warning),
+                        (EditText) dialog.findViewById(R.id.moisture_min),
+                        (EditText) dialog.findViewById(R.id.moisture_max));
+
+                // Set the state for humidity
+                setState(false,
+                        (Switch) dialog.findViewById(R.id.switch_humidity_warning),
+                        (EditText) dialog.findViewById(R.id.humidity_min),
+                        (EditText) dialog.findViewById(R.id.humidity_max));
+            } else {
+                // Set the state for temperature warning
+                setState(true,
+                        (Switch) dialog.findViewById(R.id.switch_temperature_warning),
+                        (EditText) dialog.findViewById(R.id.temperature_min),
+                        (EditText) dialog.findViewById(R.id.temperature_max));
+
+                // Set the state for moisture warning
+                setState(
+                        true,
+                        (Switch) dialog.findViewById(R.id.switch_moisture_warning),
+                        (EditText) dialog.findViewById(R.id.moisture_min),
+                        (EditText) dialog.findViewById(R.id.moisture_max));
+
+                // Set the state for humidity
+                setState(true,
+                        (Switch) dialog.findViewById(R.id.switch_humidity_warning),
+                        (EditText) dialog.findViewById(R.id.humidity_min),
+                        (EditText) dialog.findViewById(R.id.humidity_max));
+            }
+        }
+
+        /**
+         * A helper method that will assign the checked and enabled state of a push notification
+         * settings in the dialog.
+         * @param state The state of the setting.
+         * @param rSwitch The Switch of the setting.
+         * @param min The minimum limit of the setting.
+         * @param max The maximum limit of the setting.
+         */
+        public void setState(boolean state, Switch rSwitch, EditText min, EditText max) {
+            rSwitch.setChecked(false);
+            rSwitch.setEnabled(state);
+
+            min.setText("");
+            min.setEnabled(state);
+
+            max.setText("");
+            max.setEnabled(state);
+        }
     }
 
     ///////////////////

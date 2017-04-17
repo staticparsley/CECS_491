@@ -41,4 +41,17 @@
 
     <dimen name="flat_button_dense_min_width">60dp</dimen>
     <dimen name="flat_button_dense_height">18dp</dimen>
+
+    <!-- **************** -->
+    <!-- * SETUP DIALOG * -->
+    <!-- **************** -->
+
+    <!-- Height to maintain alignment of settings label and settings input -->
+    <dimen name="dialog_settings_height">50dp</dimen>
+    <dimen name="dialog_settings_sub_height">40dp</dimen>
+
+    <!-- Font sizes -->
+    <dimen name="fontsize_settings">18sp</dimen>
+    <dimen name="fontsize_settings_sub">12sp</dimen>
+
 </resources>

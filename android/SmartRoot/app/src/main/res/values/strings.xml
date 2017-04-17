@@ -59,4 +59,23 @@
     <!-- Title for action bar menu -->
     <string name="menu_logout">Logout</string>
 
+    <!-- ***************** -->
+    <!-- * SETUP DIALOGS * -->
+    <!-- ***************** -->
+
+    <!-- Common button labels for setup dialogs -->
+    <string name="button_done">DONE</string>
+
+
+    <!-- Labels for Automatic Watering Setup -->
+    <string name="label_moisture_limit">Moisture Limit</string>
+
+    <!-- Labels for Push Notification -->
+    <string name="label_push_notification">Push Notification</string>
+    <string name="label_temperature_warning">Temperature Warning</string>
+    <string name="label_moisture_warning">Moisture Warning</string>
+    <string name="label_humidity_warning">Humidity Warning</string>
+    <string name="label_minimum">Minimum</string>
+    <string name="label_maximum">Maximum</string>
+
 </resources>

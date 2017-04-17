@@ -1,6 +1,5 @@
 package edu.csulb.smartroot.welcome;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +16,10 @@ import edu.csulb.smartroot.welcome.listeners.*;
  */
 public class Welcome extends AppCompatActivity {
 
-    private Context context;
     private LayoutInflater inflater;
 
     /**
-     * Gets references to context and inflater for button listeners upon creation of this activity.
+     * Gets references to inflater for button listeners upon creation of this activity.
      * @param savedInstanceState The state of this activity when previously launched.
      */
     @Override
@@ -29,8 +27,7 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Get reference to this context and inflater to use in button listeners
-        context = this;
+        // Get reference to inflater to use in button listeners
         inflater = getLayoutInflater();
     }
 
@@ -78,7 +75,7 @@ public class Welcome extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Override login button listeners on dialog. This is so the dialog will remain
+        // Override register button listeners on dialog. This is so the dialog will remain
         // open when credentials are not valid.
         Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         button.setOnClickListener(new RegisterButton(dialog, this));

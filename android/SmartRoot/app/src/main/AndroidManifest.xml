@@ -11,6 +11,11 @@
         <activity
             android:name=".welcome.Welcome"
             android:label="@string/activity_label_welcome">
+        </activity>
+
+        <activity
+            android:name=".gardenview.GardenView"
+            android:label="@string/activity_label_gardenview">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-        </activity>
-
-        <activity
-            android:name=".gardenview.GardenView"
-            android:label="@string/activity_label_gardenview">
         </activity>
     </application>
 
