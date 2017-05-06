@@ -11,6 +11,7 @@
         <activity
             android:name=".welcome.Welcome"
             android:label="@string/activity_label_welcome">
+
         </activity>
 
         <activity
@@ -22,7 +23,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

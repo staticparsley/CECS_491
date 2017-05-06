@@ -2,17 +2,19 @@ package edu.csulb.smartroot.gardenview;
 
 import android.content.Context;
 import android.content.DialogInterface;
+
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -89,7 +91,7 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
 
         // Set garden name
         TextView tx = (TextView) holder.view.findViewById(R.id.name);
-        tx.setText(context.getString(R.string.label_garden_name));
+        tx.setText("Garden " + (position + 1));
 
         // Set temperature
         tx = (TextView) holder.view.findViewById(R.id.temperature);
@@ -209,7 +211,7 @@ public class GardenHolder extends RecyclerView.Adapter<GardenHolder.ViewHolder>
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             System.out.println("Switch has changed");
 
-            if (isChecked) {
+            if (!isChecked) {
                 // Set the state for temperature warning
                 setState(false,
                         (Switch) dialog.findViewById(R.id.switch_temperature_warning),
