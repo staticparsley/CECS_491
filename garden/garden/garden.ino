@@ -64,7 +64,6 @@ void setup() {
  * \brief Gets sensor readings and turn on water flow based on predefined threshold
  */
 void loop() {
-
   // Update sensors
   TempHumid.read11(TEMP_HUMID_PIN);
   Moisture.read(MOISTURE_PIN);
@@ -104,7 +103,7 @@ void readSensors(double &_temperature, double &_humidity, double &_moisture) {
 void sendReadings(){
   i2cSend(temperature);
   i2cSend(humidity);
-  i2cSend(moisture); 
+  i2cSend(moisture);
 }
 
 /**

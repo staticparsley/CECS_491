@@ -1,5 +1,5 @@
 /**
- * \file ftpclient.cpp
+ * \file wifi_portal.ino
  * \brief This is the ESP8266 WiFi module for the garden. It handles communication with the server
  */
 
@@ -9,6 +9,10 @@
 
 #include <Wire.h>
 #include "credentials.h"
+
+#define WIFI_DELAY 500 // time to retry connection in ms
+#define UPDATE_RATE 1000 // frequency of sending POST request in ms
+#define ARDUINO_CHANNEL 17 // i2c channel that Arduino UNO is on
 
 // Clients
 WiFiClient client;
@@ -24,6 +28,14 @@ float moisture;
 void setup() {
   // Start i2c communication as master
   Wire.begin();
+
+  // Initialize LED indicators, the logic is inverted on the ESP8266.
+  // HIGH is off, LOW is on.
+  pinMode(D0, OUTPUT); // This is the built-in red LED
+  digitalWrite(D0, HIGH);
+
+  pinMode(D4, OUTPUT); // This is the built-in blue LED
+  digitalWrite(D4, HIGH);
 
   // Start serial communication for debug messages
   Serial.begin(115200);
@@ -44,14 +56,21 @@ void setup() {
 
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
+
+  digitalWrite(D0, LOW);
 }
 
 /**
  * \brief Handles the POST request
  */
 void loop() {
+  // TODO: Check to see if WiFi is still connected. If not, retry to connect
+
+  digitalWrite(D4, LOW);
   postReadings();
-  delay(500);
+  digitalWrite(D4, HIGH);
+  delay(UPDATE_RATE);
+  
 }
 
 /**
@@ -87,7 +106,8 @@ void postReadings() {
  */
 String getReadings() {
   // Request sensor readings from Aruduino UNO
-  Wire.requestFrom(17, 6);
+  Wire.flush();
+  Wire.requestFrom(ARDUINO_CHANNEL, 6);
 
   // Get sensor readings from Arduino UNO. The sensor readings are sent in this order:
   // temperature, humidity, and moisture.
