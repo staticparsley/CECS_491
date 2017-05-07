@@ -35,9 +35,9 @@
     <!-- Labels for Garden Card -->
     <string name="label_garden_name">Placeholder</string>
     <string name="label_water">Automatic Watering</string>
-    <string name="label_temperature">Temperature: %d degrees</string>
-    <string name="label_moisture">Moisture: %d%%</string>
-    <string name="label_humidity">Humidity: %d%%</string>
+    <string name="label_temperature">Temperature: %.2f degrees</string>
+    <string name="label_moisture">Moisture: %.2f%%</string>
+    <string name="label_humidity">Humidity: %.2f%%</string>
     <string name="label_updated">Last updated %d hours ago</string>
 
     <!-- Buttons for Garden Card -->
