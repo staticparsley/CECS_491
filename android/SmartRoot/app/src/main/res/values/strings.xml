@@ -23,6 +23,10 @@
 
     <string name="password_mismatch">Passwords do not match.</string>
 
+    <!-- Toast notification for Login status -->
+    <string name="login_success">Login Success!</string>
+    <string name="login_failed">Login Failed.</string>
+
     <!-- Buttons for Login and Register Dialog -->
     <string name="login">Login</string>
     <string name="create">Create</string>
