@@ -1,15 +1,20 @@
 package edu.csulb.smartroot.gardenview;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import edu.csulb.smartroot.R;
+import edu.csulb.smartroot.welcome.Welcome;
 
 /**
  * An activity that will display a list of gardens as cards.
@@ -18,6 +23,8 @@ public class GardenView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
 
+    private String userName;
+
     /**
      * Gets a reference to the RecyclerView and Adapter upon creation of this activity.
      * @param savedInstanceState The state of this activity when previously launched.
@@ -25,6 +32,10 @@ public class GardenView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gardenview);
+
+        // Set the title as the user name
+        userName = getIntent().getExtras().getString("username");
+        setTitle(userName);
 
         // Get reference to recycler view and set layout
         recyclerView = (RecyclerView) findViewById(R.id.garden_recycler_view);
@@ -53,7 +64,10 @@ public class GardenView extends AppCompatActivity {
      * @param menuItem References the Logout button the action bar.
      */
     public void logout(MenuItem menuItem) {
-        // TODO: Implement logging the user out of the database.
-        System.out.println("Logging out");
+        Toast.makeText(
+                this, getString(R.string.logout, userName), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, Welcome.class);
+        startActivity(intent);
     }
 }

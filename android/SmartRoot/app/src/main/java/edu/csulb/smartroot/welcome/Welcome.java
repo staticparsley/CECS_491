@@ -26,6 +26,7 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        setTitle(R.string.activity_label_welcome);
 
         // Get reference to inflater to use in button listeners
         inflater = getLayoutInflater();

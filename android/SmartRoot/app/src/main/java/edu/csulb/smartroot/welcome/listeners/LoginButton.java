@@ -3,6 +3,7 @@ package edu.csulb.smartroot.welcome.listeners;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
@@ -71,8 +72,10 @@ public class LoginButton implements Button.OnClickListener {
         }
 
         // TODO: Implement SmartRoots API GET request to validate credentials
+        view.setEnabled(false);
+
         // Create new intent to start GardenView activity upon validation.
-        ValidateCredentials validateCredentials = new ValidateCredentials(userName, password);
+        ValidateCredentials validateCredentials = new ValidateCredentials(userName, password, view);
         validateCredentials.execute(context.getString(R.string.login_api));
     }
 
@@ -83,6 +86,7 @@ public class LoginButton implements Button.OnClickListener {
     private class ValidateCredentials extends AsyncTask<String, Void, JSONObject> {
         String userName;
         String password;
+        View view;
 
         /**
          * Constructor that references the username and password
@@ -90,9 +94,10 @@ public class LoginButton implements Button.OnClickListener {
          * @param userName The username.
          * @param password The password of the user
          */
-        public ValidateCredentials(String userName, String password) {
+        public ValidateCredentials(String userName, String password, View view) {
             this.userName = userName;
             this.password = password;
+            this.view = view;
         }
 
         /**
@@ -138,7 +143,6 @@ public class LoginButton implements Button.OnClickListener {
 
             // Convert the response from the server into a JSONObject
             JSONObject jsonObject = null;
-
             try {
                 jsonObject = new JSONObject(result.toString());
             } catch (JSONException e) {
@@ -169,15 +173,16 @@ public class LoginButton implements Button.OnClickListener {
                     Toast.makeText(
                             context, context.getString(R.string.login_success), Toast.LENGTH_SHORT).show();
 
+                    // Create new intent and store username to display in GardenView
                     Intent intent = new Intent(context, GardenView.class);
-
-                    // Store the user name to display in the GardenView
                     intent.putExtra("username", userName);
+
                     context.startActivity(intent);
                 } else {
                     //... otherwise notify the user the credentials are incorrect
                     Toast.makeText(
                             context, context.getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
+                    view.setEnabled(true);
                 }
 
             } catch (JSONException e) {
